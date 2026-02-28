@@ -1,0 +1,67 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar-container {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.sidebar {
+  width: 100%;
+  background-color: var(--color-bg-alt-2);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.sidebar-resizer {
+  width: 5px;
+  background-color: var(--color-border-base);
+  cursor: col-resize;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  transition: background-color 0.2s, width 0.2s;
+}
+
+.sidebar-resizer:hover,
+.app-container.resizing .sidebar-resizer {
+  background-color: var(--color-brand);
+  width: 6px;
+}
+
+.app-container.resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-base);
+  animation: fadeIn 0.3s ease;
+}
+
+.main-header {
+  padding: 2rem 2rem 1rem 2rem;
+}
+
+.main-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 2rem 2rem 2rem;
+}

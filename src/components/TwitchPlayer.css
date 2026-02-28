@@ -1,0 +1,110 @@
+.player-wrapper {
+    flex: 1;
+    display: flex;
+    background-color: #000;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+}
+
+.player-overlay-controls {
+    position: absolute;
+    top: 40px;
+    /* Moved down to avoid native titlebar / traffic lights */
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 50;
+    /* Above the iframe */
+    pointer-events: none;
+    /* Let clicks pass through where there's no button */
+}
+
+.overlay-btn {
+    pointer-events: auto;
+    background-color: rgba(31, 31, 35, 0.85);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid var(--color-border-alt);
+    cursor: pointer;
+    box-shadow: var(--shadow-base);
+    transition: all 0.2s;
+    opacity: 0;
+    /* Hide initially */
+}
+
+.player-wrapper:hover .overlay-btn {
+    opacity: 1;
+    /* Show on hover */
+}
+
+.overlay-btn:hover {
+    background-color: var(--color-brand);
+    border-color: var(--color-brand);
+}
+
+.video-section {
+    flex: 1;
+    height: 100%;
+}
+
+.chat-section {
+    width: 340px;
+    height: 100%;
+    border-left: 1px solid var(--color-border-alt);
+    animation: slideInRight 0.3s ease;
+}
+
+
+.resume-prompt-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: fadeIn 0.3s ease;
+}
+
+.resume-prompt {
+    background-color: var(--color-bg-alt);
+    padding: 24px 32px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border-alt);
+    box-shadow: var(--shadow-hover);
+    text-align: center;
+}
+
+.resume-prompt p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.prompt-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.prompt-actions button {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.prompt-actions button:hover {
+    background-color: var(--color-brand);
+}

@@ -1,0 +1,153 @@
+.sidebar-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.search-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 100%;
+    background-color: var(--color-bg-hover);
+    border: 1px solid var(--color-border-base);
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    border-color: var(--color-brand);
+}
+
+.autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-border-alt);
+    border-radius: var(--radius-md);
+    margin-top: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    list-style: none;
+    box-shadow: var(--shadow-base);
+}
+
+.autocomplete li {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.autocomplete li:hover {
+    background-color: var(--color-bg-hover);
+}
+
+.autocomplete img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.follows-list {
+    list-style: none;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.follow-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s;
+    user-select: none;
+    margin-bottom: 2px;
+}
+
+.follow-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.follow-item.dragging {
+    background-color: var(--color-bg-hover);
+    box-shadow: var(--shadow-hover);
+    border: 1px solid var(--color-border-alt);
+    z-index: 100;
+}
+
+.follow-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-live);
+    border-radius: 50%;
+}
+
+.name-live {
+    color: var(--color-live);
+    font-weight: bold;
+}
+
+.name-offline {
+    color: var(--color-text-base);
+}
+
+.del-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-alt);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+}
+
+.del-btn:hover {
+    color: white;
+    background-color: var(--color-bg-hover);
+    border-radius: 50%;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid var(--color-border-alt);
+}
+
+.settings-btn {
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: var(--color-text-alt);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.settings-btn:hover {
+    background-color: var(--color-bg-hover);
+    color: white;
+}

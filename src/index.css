@@ -1,0 +1,103 @@
+:root,
+:root.brand-purple {
+  --color-brand: #9146FF;
+  --color-brand-muted: #a970ff;
+}
+
+:root.brand-blue {
+  --color-brand: #0084FF;
+  --color-brand-muted: #339dff;
+}
+
+:root.brand-green {
+  --color-brand: #00E676;
+  --color-brand-muted: #33ebab;
+}
+
+:root.brand-red {
+  --color-brand: #FF3D00;
+  --color-brand-muted: #ff6333;
+}
+
+:root {
+  --color-bg-base: #0e0e10;
+  --color-bg-alt: #18181b;
+  --color-bg-alt-2: #1f1f23;
+  --color-bg-hover: #3a3a3d;
+  --color-text-base: #efeff1;
+  --color-text-alt: #adadb8;
+  --color-text-alt-2: #dedee3;
+  --color-live: #eb0400;
+  --color-border-base: rgba(255, 255, 255, 0.1);
+  --color-border-alt: rgba(255, 255, 255, 0.2);
+
+  --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+
+  --font-base: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-base);
+  font-family: var(--font-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  /* Avoid main window scrollbars, delegate to areas */
+  user-select: none;
+  /* Desktop app feel */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-hover);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-alt);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
