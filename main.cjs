@@ -37,6 +37,7 @@ function createWindow() {
         mainWindow.webContents.openDevTools({ mode: 'detach' });
     } else {
         mainWindow.loadFile(path.join(__dirname, 'dist', 'index.html'));
+        mainWindow.webContents.openDevTools({ mode: 'detach' });
         // Check for updates on startup if packaged
         setTimeout(() => {
             autoUpdater.checkForUpdatesAndNotify();
