@@ -1,8 +1,15 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const { autoUpdater } = require('electron-updater');
 
 const isDev = process.env.NODE_ENV === 'development';
+
+// Setup auto-updater logger
+autoUpdater.logger = require('electron-log');
+if (autoUpdater.logger) {
+    autoUpdater.logger.transports.file.level = 'info';
+}
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -30,7 +37,13 @@ function createWindow() {
         mainWindow.webContents.openDevTools({ mode: 'detach' });
     } else {
         mainWindow.loadFile(path.join(__dirname, 'dist', 'index.html'));
+        // Check for updates on startup if packaged
+        setTimeout(() => {
+            autoUpdater.checkForUpdatesAndNotify();
+        }, 5000);
     }
+
+    updateWindow = mainWindow;
 }
 
 app.whenReady().then(() => {
@@ -101,4 +114,43 @@ ipcMain.handle('twitch-gql', async (event, query, variables) => {
 });
 ipcMain.handle('log', (event, ...args) => {
     console.log('[RENDERER LOG]', ...args);
+});
+
+// --- Auto Updater Logic ---
+let updateWindow;
+
+ipcMain.handle('app-version', () => {
+    return app.getVersion();
+});
+
+ipcMain.handle('check-for-updates', () => {
+    if (isDev) {
+        console.log('[Updater] Running in dev mode, skipping update check.');
+        return;
+    }
+    autoUpdater.checkForUpdatesAndNotify();
+});
+
+ipcMain.handle('install-update', () => {
+    autoUpdater.quitAndInstall();
+});
+
+// Forward updater events to the renderer
+autoUpdater.on('checking-for-update', () => {
+    if (updateWindow) updateWindow.webContents.send('updater-event', 'checking');
+});
+autoUpdater.on('update-available', (info) => {
+    if (updateWindow) updateWindow.webContents.send('updater-event', 'available', info);
+});
+autoUpdater.on('update-not-available', (info) => {
+    if (updateWindow) updateWindow.webContents.send('updater-event', 'not-available', info);
+});
+autoUpdater.on('error', (err) => {
+    if (updateWindow) updateWindow.webContents.send('updater-event', 'error', err);
+});
+autoUpdater.on('download-progress', (progressObj) => {
+    if (updateWindow) updateWindow.webContents.send('updater-event', 'progress', progressObj);
+});
+autoUpdater.on('update-downloaded', (info) => {
+    if (updateWindow) updateWindow.webContents.send('updater-event', 'downloaded', info);
 });

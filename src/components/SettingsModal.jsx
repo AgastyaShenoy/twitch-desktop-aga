@@ -6,16 +6,51 @@ export default function SettingsModal({ onClose }) {
     const [volume, setVolume] = useState(parseFloat(localStorage.getItem('defaultVolume') || '0.5'));
     const [quality, setQuality] = useState(localStorage.getItem('defaultQuality') || 'auto');
 
+    // Auto-Updater State
+    const [appVersion, setAppVersion] = useState('');
+    const [updateStatus, setUpdateStatus] = useState(''); // 'checking', 'available', 'not-available', 'downloading', 'downloaded', 'error'
+    const [downloadProgress, setDownloadProgress] = useState(null);
+
     useEffect(() => {
         // Apply theme immediately to root Document for instant feedback
         document.documentElement.className = theme;
     }, [theme]);
+
+    useEffect(() => {
+        let cleanup;
+        if (window.electronAPI && window.electronAPI.getAppVersion) {
+            window.electronAPI.getAppVersion().then(version => setAppVersion(version));
+
+            cleanup = window.electronAPI.onUpdaterEvent((status, info) => {
+                setUpdateStatus(status);
+                if (status === 'progress') {
+                    setDownloadProgress(info);
+                }
+            });
+        }
+        return () => {
+            if (cleanup) cleanup();
+        };
+    }, []);
 
     const handleSave = () => {
         localStorage.setItem('themeColor', theme);
         localStorage.setItem('defaultVolume', volume.toString());
         localStorage.setItem('defaultQuality', quality);
         onClose();
+    };
+
+    const handleCheckUpdate = () => {
+        setUpdateStatus('checking');
+        if (window.electronAPI && window.electronAPI.checkForUpdates) {
+            window.electronAPI.checkForUpdates();
+        }
+    };
+
+    const handleInstallUpdate = () => {
+        if (window.electronAPI && window.electronAPI.installUpdate) {
+            window.electronAPI.installUpdate();
+        }
     };
 
     return (
@@ -71,6 +106,30 @@ export default function SettingsModal({ onClose }) {
                         <option value="480p">480p</option>
                         <option value="360p">360p</option>
                     </select>
+                </div>
+
+                <div className="setting-group updater-group">
+                    <label>Application Version</label>
+                    <div className="updater-info">
+                        <p>v{appVersion}</p>
+                        {updateStatus === '' || updateStatus === 'not-available' || updateStatus === 'error' ? (
+                            <button className="btn-secondary" onClick={handleCheckUpdate}>
+                                Check for Updates
+                            </button>
+                        ) : updateStatus === 'checking' ? (
+                            <p className="status-text">Checking for updates...</p>
+                        ) : updateStatus === 'available' ? (
+                            <p className="status-text">Update found! Preparing to download...</p>
+                        ) : updateStatus === 'progress' && downloadProgress ? (
+                            <p className="status-text">Downloading: {Math.round(downloadProgress.percent)}%</p>
+                        ) : updateStatus === 'downloaded' ? (
+                            <button className="btn-primary highlight" onClick={handleInstallUpdate}>
+                                Restart & Install Update
+                            </button>
+                        ) : null}
+                    </div>
+                    {updateStatus === 'error' && <p className="error-text">Failed to check for updates.</p>}
+                    {updateStatus === 'not-available' && <p className="success-text">You are on the latest version.</p>}
                 </div>
 
                 <div className="modal-actions">
